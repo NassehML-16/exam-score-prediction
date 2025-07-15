@@ -88,7 +88,7 @@ def show_info_page():
 
     st.header("Problem Statement")
     st.write("""
-    Predicting student exam scores is a crucial task for educational institutions HTU.
+    Predicting student exam scores is a crucial task for educational institutions (an example is HTU).
     Accurate predictions can help identify students at risk, personalize learning support, and improve overall
     academic outcomes. However, understanding the factors influencing performance and
     building a reliable predictive model can be challenging. This web appplication aims to address this challenge
