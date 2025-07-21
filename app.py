@@ -54,18 +54,15 @@ def show_predict_page():
     ### Enter student details to predict their performance index.
     """)
 
-    # Input fields for features
     hours_studied = st.number_input('Hours Studied', min_value=1, max_value=12, value=5)
     previous_scores = st.number_input('Previous Scores', min_value=20, max_value=99, value=70)
     extracurricular_activities = st.selectbox('Extracurricular Activities', ('Yes', 'No'))
     sleep_hours = st.number_input('Sleep Hours', min_value=2, max_value=9, value=7)
     sample_papers = st.number_input('Sample Question Papers Practiced', min_value=0, max_value=9, value=5)
 
-    # Predict button
     predict_button = st.button("Predict Score")
 
     if predict_button:
-        # Create a DataFrame from user input
         input_data = pd.DataFrame({
             'Hours Studied': [hours_studied],
             'Previous Scores': [previous_scores],
@@ -74,14 +71,25 @@ def show_predict_page():
             'Sample Question Papers Practiced': [sample_papers]
         })
 
-        # Apply the label encoder to the 'Extracurricular Activities' column
         input_data['Extracurricular Activities'] = encoder.transform(input_data['Extracurricular Activities'])
 
-        # Make prediction
         prediction = model.predict(input_data)
 
-        st.subheader(f"The predicted score is: {np.round(prediction[0], decimals=0)}")
+        # Compute confidence interval (95%)
+        y_pred_train = model.predict(X_train)
+        residuals = y_train - y_pred_train
+        se = np.sqrt(np.sum(residuals**2) / (len(y_train) - 2))
+        mean_x = np.mean(X_train, axis=0)
+        n = len(y_train)
+        t_value = 2.0  # Approx for large df, 95% CI
 
+        se_pred = se * np.sqrt(1 + (1/n) + ((input_data - mean_x)**2).sum(axis=1) / ((X_train - mean_x)**2).sum().sum())
+        lower_bound = prediction[0] - t_value * se_pred[0]
+        upper_bound = prediction[0] + t_value * se_pred[0]
+
+        st.subheader(f"The predicted score is: {np.round(prediction[0], decimals=0)}")
+        st.markdown(f"#### The score is expected to fall within the 95% confidence interval of **{lower_bound:.2f}** to **{upper_bound:.2f}**.")
+        
 # Function for the information page
 def show_info_page():
     st.title("About This Web App")
