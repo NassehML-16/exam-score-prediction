@@ -99,7 +99,7 @@ def show_info_page():
     Predicting student exam scores is a crucial task for educational institutions (an example is HTU).
     Accurate predictions can help identify students at risk, personalize learning support, and improve overall
     academic outcomes. However, understanding the factors influencing performance and
-    building a reliable predictive model can be challenging. This web appplication aims to address this challenge
+    building a reliable predictive model can be challenging. This web application aims to address this challenge
     by providing a tool to predict student performance based on several key indicators.
     """)
 
@@ -124,7 +124,7 @@ def show_info_page():
     st.header("Description of Data Variables")
     st.write("""
     *   **Hours Studied:** The total number of hours a student spent studying for the exam (it may be just a course).
-    *   **Previous Scores:** The average score of the student in previous exams/or the previous score of the stduent in a related course.
+    *   **Previous Scores:** The average score of the student in previous exams/or the previous score of the student in a related course.
     *   **Extracurricular Activities:** Whether the student participates in extracurricular activities (Yes/No). Examples are coding clubs, regular educational activities, etc.
     *   **Sleep Hours:** The average number of hours a student sleeps per night before the exam.
     *   **Sample Question Papers Practiced:** The number of sample question papers the student practiced (it could be past questions).
