@@ -75,6 +75,13 @@ def show_predict_page():
 
         prediction = model.predict(input_data)   
 
+        # Ensure the predicted score fall within the range of 0 to 100
+        predicted_score = prediction[0]
+        if predicted_score > 100:
+            predicted_score = 100
+        elif predicted_score < 0:
+            predicted_score = 0 
+
         # Compute confidence interval (95%)
         y_pred_train = model.predict(X_train)
         residuals = y_train - y_pred_train
@@ -84,10 +91,14 @@ def show_predict_page():
         t_value = 2.0  # Approx for large df, 95% CI
 
         se_pred = se * np.sqrt(1 + (1/n) + ((input_data - mean_x)**2).sum(axis=1) / ((X_train - mean_x)**2).sum().sum())
-        lower_bound = prediction[0] - t_value * se_pred[0]
-        upper_bound = prediction[0] + t_value * se_pred[0]
+        lower_bound = predicted_score - t_value * se_pred[0]
+        if lower_bound < 0:
+            lower_bound = 0
+        upper_bound = predicted_score + t_value * se_pred[0]
+        if upper_bound > 100:
+            upper_bound = 100
 
-        st.subheader(f"The predicted score is: {np.round(prediction[0], decimals=0)}")
+        st.subheader(f"The predicted score is: {np.round(predicted_score, decimals=0)}")
         st.markdown(f"#### The score is expected to fall within the 95% confidence interval of **{lower_bound:.2f}** to **{upper_bound:.2f}**.")
         
 # Function for the information page
