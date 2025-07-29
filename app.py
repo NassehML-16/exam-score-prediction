@@ -54,11 +54,11 @@ def show_predict_page():
     ### Enter student details to predict their performance index.
     """)
 
-    hours_studied = st.number_input('Hours Studied', min_value=1, max_value=12, value=5)
-    previous_scores = st.number_input('Previous Scores', min_value=20, max_value=99, value=70)
+    hours_studied = st.number_input('Hours Studied', min_value=0, max_value=12, value=0)
+    previous_scores = st.number_input('Previous Scores', min_value=0, max_value=99, value=0)
     extracurricular_activities = st.selectbox('Extracurricular Activities', ('Yes', 'No'))
-    sleep_hours = st.number_input('Sleep Hours', min_value=2, max_value=9, value=7)
-    sample_papers = st.number_input('Sample Question Papers Practiced', min_value=0, max_value=9, value=5)
+    sleep_hours = st.number_input('Sleep Hours', min_value=0, max_value=9, value=0)
+    sample_papers = st.number_input('Sample Question Papers Practiced', min_value=0, max_value=9, value=0)
 
     predict_button = st.button("Predict Score")
 
