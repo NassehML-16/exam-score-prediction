@@ -85,7 +85,11 @@ def show_predict_page():
 
         se_pred = se * np.sqrt(1 + (1/n) + ((input_data - mean_x)**2).sum(axis=1) / ((X_train - mean_x)**2).sum().sum())
         lower_bound = prediction[0] - t_value * se_pred[0]
+        if lower_bound < 0:
+            lower_bound = 0
         upper_bound = prediction[0] + t_value * se_pred[0]
+        if upper_bound > 100:
+            upper_bound = 100
 
         st.subheader(f"The predicted score is: {np.round(prediction[0], decimals=0)}")
         st.markdown(f"#### The score is expected to fall within the 95% confidence interval of **{lower_bound:.2f}** to **{upper_bound:.2f}**.")
