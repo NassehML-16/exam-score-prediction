@@ -73,11 +73,7 @@ def show_predict_page():
 
         input_data['Extracurricular Activities'] = encoder.transform(input_data['Extracurricular Activities'])
 
-        prediction = model.predict(input_data)
-        if prediction > 100:
-            prediction = 100
-        elif prediction < 0:
-            prediction = 0       
+        prediction = model.predict(input_data)   
 
         # Compute confidence interval (95%)
         y_pred_train = model.predict(X_train)
